@@ -164,7 +164,7 @@ void loop() {
 
 **Take a picture of your screen working insert it here!**
 
-
+>> photo taken
 
 ## Part D. Logging values to the EEPROM and reading them back
  
@@ -176,20 +176,94 @@ Yes - the state is given by a dial that does not have unlimited 360 turning. If 
 
 **b. Why is the code here all in the setup() functions and not in the loop() functions?**
 
+You do not want to continuously write over the data you are reading - only one action needs to be performed per state change
+
 **c. How many byte-sized data samples can you store on the Atmega328?**
 
 1024 byte sized data samples
 
 **d. How would you get analog data from the Arduino analog pins to be byte-sized? How about analog data from the I2C devices?**
 
+For 10-bit ADC reads, you would need to divide by 4 to get the values to be byte sized. For the I2C devices
+
 **e. Alternately, how would we store the data if it were bigger than a byte? (hint: take a look at the [EEPROMPut](https://www.arduino.cc/en/Reference/EEPROMPut) example)**
+
+Using the .put() and .get() functions along with type-setting the values you would want to store (i.e. values that are greater than 8-bit ints)
 
 **Upload your modified code that takes in analog values from your sensors and prints them back out to the Arduino Serial Monitor.**
 
+```
+// READ ANALOG SIGNALS - WRITE TO PROM
+
+String textarray = "hello cornell tech!";
+int endAddr = 0;
+int begAddr = 0;
+
+void state2Setup() {
+  digitalWrite(ledPin, LOW);
+  
+  Serial.println("Writing to EEPROM");
+  
+  //if any of the pin settings for the different states differed for the different states, you could change those settings here.
+  for ( int j = 0 ; j < 1023 ; j++) {
+    int photoVal = analogRead(A1)/4;
+    endAddr = begAddr + min(1, EEPROMSIZE);
+    for (int i = begAddr; i < endAddr; i++) {
+      EEPROM.write(i, photoVal);
+    }
+    begAddr = endAddr;
+  }
+  Serial.println("Value committed to EEPROM!");
+}
+
+void state2Loop() {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+}
+
+void doState2() {
+  if (lastState != 2) state2Setup();
+  state2Loop();
+}
+```
+
+```
+// PRINT OUT PROM VALS TO SERIAL PORT
+
+byte value;
+extern int begAddr;
+
+
+void state1Setup() {
+  Serial.println("Reading from EEPROM");
+
+  for (int i = 1; i < begAddr + 1; i++) {
+  //for (int i = 1; i < EEPROMSIZE+1; i++) {
+    value = EEPROM.read(i-1);
+      Serial.println(value);
+  }
+  Serial.println();
+
+  Serial.println("Done reading from EEPROM");
+}
+
+void state1Loop() {
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+}
+
+void doState1() {
+  if (lastState != 1) { state1Setup(); }
+  state1Loop();
+}
+```
 ### 2. Design your logger
  
 **a. Insert here a copy of your final state diagram.**
 
+Data logger uses the switch state code that was provided above. The code (also shown above) fills the entire eeprom with time-ordered 8-bit light data from the photocell resistor and stops once the eeprom is full. The read-eeprom state then transers the data in importable format to the serial monitor to be analyzed by my favorite data analysis software.
+
 ### 3. Create your data logger!
  
 **a. Record and upload a short demo video of your logger in action.**
+
+Data Output from EEPROM!
+![]()
