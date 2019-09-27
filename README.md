@@ -168,7 +168,7 @@ void loop() {
 
 **Take a picture of your screen working insert it here!**
 
->> photo taken
+[Display Display](IMG_20190927_125338.jpg)
 
 ## Part D. Logging values to the EEPROM and reading them back
  
