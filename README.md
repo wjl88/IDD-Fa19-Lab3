@@ -22,7 +22,7 @@ For this lab, we will be experimenting with a variety of sensors, sending the da
 
 **How might you use this with only the parts in your kit? Show us your solution.**
 
-
+[Video of RGB LED and Sensors](https://youtu.be/j0pAbgdt1HA)
 
 ## Part C. Voltage Varying Sensors 
  
@@ -30,9 +30,11 @@ For this lab, we will be experimenting with a variety of sensors, sending the da
 
 **a. What voltage values do you see from your force sensor?**
 
+It can only produce between 0 and just under 5 V
+
 **b. What kind of relationship does the voltage have as a function of the force applied? (e.g., linear?)**
 
-Non-linear - seems to go as 1/x
+Non-linear - seems to go as 1/x (some log scale otherwise)
 
 **c. Can you change the LED fading code values so that you get the full range of output voltages from the LED when using your FSR?**
 
@@ -41,6 +43,8 @@ Non-linear - seems to go as 1/x
 **e. What kind of relationship does the resistance have as a function of stimulus? (e.g., linear?)**
 
 Non linear
+
+[Video of RGB LED and Sensors](https://youtu.be/j0pAbgdt1HA)
 
 ### 2. Accelerometer
  
