@@ -266,4 +266,4 @@ Data logger uses the switch state code that was provided above. The code (also s
 **a. Record and upload a short demo video of your logger in action.**
 
 Data Output from EEPROM!
-![Data](eepromdata)
+![Data](eepromdata.jpg)
